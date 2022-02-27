@@ -12,6 +12,7 @@ class Frontpage extends Component
 
     public $title;
     public $content;
+    public $slider = false;
 
     public function mount($urlslug = null)
     {
@@ -22,8 +23,14 @@ class Frontpage extends Component
     {
         if (empty($urlslug)) {
             $data = Page::where('is_default_home', true)->first();
+            $slider = true;
         } else {
             $data = Page::where('slug', $urlslug)->first();
+            if ($data->slug === 'home'){
+                $slider = true;
+            } else {
+                $slider = false;
+            }
         }
 
         if (!$data) {
@@ -32,6 +39,8 @@ class Frontpage extends Component
 
         $this->title = $data->title;
         $this->content = $data->content;
+        $this->slider = $slider;
+
 
     }
 
@@ -60,17 +69,13 @@ class Frontpage extends Component
             ->orderBy('sequence', 'asc')
             ->orderBy('created_at', 'asc')
             ->get();
-
     }
-
 
     public function render()
     {
-
         return view('livewire.frontpage', [
             'sideBarLinks' => $this->sideBarLinks(),
             'topNavLinks' => $this->topNavLinks(),
-
         ])->layout('layouts.frontend',['sideBarLinks' => $this->sideBarLinks()]);
     }
 }
