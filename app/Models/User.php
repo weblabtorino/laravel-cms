@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role',
     ];
 
     /**
@@ -58,4 +58,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * La lista dei Ruoli della piattaforma
+     * @return string[]
+     */
+    public static function userRoleList()
+    {
+        return [
+            'admin' => 'Admin',
+            'user' => 'User',
+        ];
+    }
 }
