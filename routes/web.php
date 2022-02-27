@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\Frontpage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,13 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware'=>[
     'auth:sanctum',
-    'verified'
+    'verified',
+    'accessrole',
 ]], function () {
 
     Route::get('/dashboard', function (){
@@ -29,4 +26,20 @@ Route::group(['middleware'=>[
     Route::get('/pages', function (){
         return view('admin.pages');
     })->name('pages');
+
+    Route::get('/navigation-menus', function (){
+        return view('admin.navigation-menus');
+    })->name('navigation-menus');
+
+    Route::get('/users', function (){
+        return view('admin.users');
+    })->name('users');
+
+Route::get('/user-permissions', function (){
+        return view('admin.user-permissions');
+    })->name('user-permissions');
+
 });
+
+Route::get('/{urlslug}', Frontpage::class);
+Route::get('/', Frontpage::class);
