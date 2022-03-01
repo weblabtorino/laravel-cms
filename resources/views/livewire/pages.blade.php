@@ -2,7 +2,7 @@
 
     <div class="flex item-center justify-end px-4 py-3 text-right sm:px-6">
         <x-jet-button wire:click="createShowModal">
-            {{ __('Create') }}
+            {{ __('Crea') }}
         </x-jet-button>
     </div>
 
